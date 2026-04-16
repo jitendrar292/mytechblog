@@ -2,38 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tags on Jit&#39;s Tech Blog</title>
-    <link>https://yourusername.github.io/tags/</link>
+    <link>https://jitendrar292.github.io/mytechblog/tags/</link>
     <description>Recent content in Tags on Jit&#39;s Tech Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 16 Apr 2026 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://yourusername.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://jitendrar292.github.io/mytechblog/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Java</title>
-      <link>https://yourusername.github.io/tags/java/</link>
+      <link>https://jitendrar292.github.io/mytechblog/tags/java/</link>
       <pubDate>Thu, 16 Apr 2026 00:00:00 +0000</pubDate>
-      <guid>https://yourusername.github.io/tags/java/</guid>
+      <guid>https://jitendrar292.github.io/mytechblog/tags/java/</guid>
       <description></description>
     </item>
     <item>
       <title>Kafka</title>
-      <link>https://yourusername.github.io/tags/kafka/</link>
+      <link>https://jitendrar292.github.io/mytechblog/tags/kafka/</link>
       <pubDate>Thu, 16 Apr 2026 00:00:00 +0000</pubDate>
-      <guid>https://yourusername.github.io/tags/kafka/</guid>
+      <guid>https://jitendrar292.github.io/mytechblog/tags/kafka/</guid>
       <description></description>
     </item>
     <item>
       <title>Microservices</title>
-      <link>https://yourusername.github.io/tags/microservices/</link>
+      <link>https://jitendrar292.github.io/mytechblog/tags/microservices/</link>
       <pubDate>Thu, 16 Apr 2026 00:00:00 +0000</pubDate>
-      <guid>https://yourusername.github.io/tags/microservices/</guid>
+      <guid>https://jitendrar292.github.io/mytechblog/tags/microservices/</guid>
       <description></description>
     </item>
     <item>
       <title>Spring Boot</title>
-      <link>https://yourusername.github.io/tags/spring-boot/</link>
+      <link>https://jitendrar292.github.io/mytechblog/tags/spring-boot/</link>
       <pubDate>Thu, 16 Apr 2026 00:00:00 +0000</pubDate>
-      <guid>https://yourusername.github.io/tags/spring-boot/</guid>
+      <guid>https://jitendrar292.github.io/mytechblog/tags/spring-boot/</guid>
       <description></description>
     </item>
   </channel>

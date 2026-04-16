@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Kafka on Jit&#39;s Tech Blog</title>
-    <link>https://yourusername.github.io/categories/kafka/</link>
+    <link>https://jitendrar292.github.io/mytechblog/categories/kafka/</link>
     <description>Recent content in Kafka on Jit&#39;s Tech Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 16 Apr 2026 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://yourusername.github.io/categories/kafka/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://jitendrar292.github.io/mytechblog/categories/kafka/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Deep Dive into Kafka Offset Commit with Spring Boot</title>
-      <link>https://yourusername.github.io/posts/deep-dive-into-kafka-offset-commit-with-spring-boot/</link>
+      <link>https://jitendrar292.github.io/mytechblog/posts/deep-dive-into-kafka-offset-commit-with-spring-boot/</link>
       <pubDate>Thu, 16 Apr 2026 00:00:00 +0000</pubDate>
-      <guid>https://yourusername.github.io/posts/deep-dive-into-kafka-offset-commit-with-spring-boot/</guid>
+      <guid>https://jitendrar292.github.io/mytechblog/posts/deep-dive-into-kafka-offset-commit-with-spring-boot/</guid>
       <description>A comprehensive guide to understanding Kafka offset commit strategies when using Spring Boot. Learn about auto-commit, manual commit, and best practices.</description>
     </item>
   </channel>

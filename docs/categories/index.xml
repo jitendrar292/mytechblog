@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Categories on Jit&#39;s Tech Blog</title>
-    <link>https://yourusername.github.io/categories/</link>
+    <link>https://jitendrar292.github.io/mytechblog/categories/</link>
     <description>Recent content in Categories on Jit&#39;s Tech Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 16 Apr 2026 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://yourusername.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://jitendrar292.github.io/mytechblog/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Kafka</title>
-      <link>https://yourusername.github.io/categories/kafka/</link>
+      <link>https://jitendrar292.github.io/mytechblog/categories/kafka/</link>
       <pubDate>Thu, 16 Apr 2026 00:00:00 +0000</pubDate>
-      <guid>https://yourusername.github.io/categories/kafka/</guid>
+      <guid>https://jitendrar292.github.io/mytechblog/categories/kafka/</guid>
       <description></description>
     </item>
   </channel>
