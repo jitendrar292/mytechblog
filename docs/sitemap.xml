@@ -2,10 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://jitendrar292.github.io/mytechblog/categories/ai/</loc>
+    <lastmod>2026-04-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://jitendrar292.github.io/mytechblog/tags/ai/</loc>
+    <lastmod>2026-04-16T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://jitendrar292.github.io/mytechblog/categories/</loc>
     <lastmod>2026-04-16T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://jitendrar292.github.io/mytechblog/tags/claude-code/</loc>
+    <lastmod>2026-04-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://jitendrar292.github.io/mytechblog/posts/claude-code-template-for-spring-boot/</loc>
+    <lastmod>2026-04-16T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://jitendrar292.github.io/mytechblog/posts/deep-dive-into-kafka-offset-commit-with-spring-boot/</loc>
+    <lastmod>2026-04-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://jitendrar292.github.io/mytechblog/tags/developer-productivity/</loc>
     <lastmod>2026-04-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://jitendrar292.github.io/mytechblog/tags/java/</loc>

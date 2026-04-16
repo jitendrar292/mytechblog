@@ -9,6 +9,13 @@
     <lastBuildDate>Thu, 16 Apr 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://jitendrar292.github.io/mytechblog/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Claude Code Template for Spring Boot — A Practical Guide</title>
+      <link>https://jitendrar292.github.io/mytechblog/posts/claude-code-template-for-spring-boot/</link>
+      <pubDate>Thu, 16 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>https://jitendrar292.github.io/mytechblog/posts/claude-code-template-for-spring-boot/</guid>
+      <description>How to set up and use a Claude Code template for generating high-quality Spring Boot applications — covering CLAUDE.md, skills, subagents, and best practices.</description>
+    </item>
+    <item>
       <title>Deep Dive into Kafka Offset Commit with Spring Boot</title>
       <link>https://jitendrar292.github.io/mytechblog/posts/deep-dive-into-kafka-offset-commit-with-spring-boot/</link>
       <pubDate>Thu, 16 Apr 2026 00:00:00 +0000</pubDate>
