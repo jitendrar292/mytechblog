@@ -114,8 +114,8 @@
   "keywords": [
     "AI", "Claude Code", "Spring Boot", "Java", "Developer Productivity"
   ],
-  "articleBody": "Introduction AI-powered coding tools like Claude Code are changing how we build applications. But just launching Claude Code and typing a prompt isn’t enough to get production-quality code. You need a well-structured template that guides the AI with your conventions, tech stack, and quality expectations.\nIn this post, I’ll walk through how to set up a Claude Code template for Spring Boot applications — covering the CLAUDE.md file, skills, subagents, and a practical workflow.\nWhy Use a Template? Without a template, Claude Code generates code based on generic assumptions. With a template, you get:\nConsistent coding style across all generated code Your preferred tech stack (Maven, JPA, Spring Security, etc.) Automated testing — Claude writes and runs tests Infrastructure-as-code — Dockerfiles, Kubernetes manifests, CI/CD pipelines Quality gates — code review, overengineering checks Repository Structure A well-organized template looks like this:\n. ├── .claude │ ├── agents │ │ ├── code-reviewer.md │ │ ├── java-architect.md │ │ ├── spring-boot-engineer.md │ │ ├── security-engineer.md │ │ ├── docker-expert.md │ │ └── kubernetes-specialist.md │ └── skills │ ├── clean-code/SKILL.md │ ├── design-patterns/SKILL.md │ ├── java-architect/SKILL.md │ ├── jpa-patterns/SKILL.md │ ├── spring-boot-engineer/SKILL.md │ └── spring-boot-patterns/SKILL.md ├── CLAUDE.md ├── pom.xml └── README.md The CLAUDE.md File This is the heart of the template. It acts as a built-in briefing that Claude loads at the start of every interaction. Here’s the structure I recommend:\n### 1. Plan Mode Default - Enter plan mode for ANY non-trivial task (3+ steps) - Use plan mode for verification, not just building - Write detailed specs upfront to reduce ambiguity ### 2. Self-Improvement Loop - After ANY correction: update `tasks/lessons.md` with the pattern - Write rules to prevent the same mistake - Review lessons at session start ### 3. Verification Before Done - Never mark a task complete without proving it works - Run tests, check logs, demonstrate correctness - Ask: \"Would a staff engineer approve this?\" ### 4. Demand Elegance - For non-trivial changes: pause and ask \"is there a more elegant way?\" - If a fix feels hacky: implement the elegant solution - Don't overengineer simple fixes ### 5. Skills Usage - Load skills from `.claude/skills/` - Each skill is one independent capability ### 6. Subagents Usage - Load subagents from `.claude/agents/` - One task per subagent for focused execution Project-Specific Instructions Add your own conventions:\n## Project General Instructions - Always use the latest versions of dependencies - Always use Maven for dependency management - Always create test cases (positive and negative) - Generate the CI pipeline to verify the code - Minimize the amount of generated code - Do not use the Lombok library - Generate Docker Compose for all components - Update README.md with each new version Skills — Extending Claude’s Knowledge Skills extend Claude’s knowledge about your specific tech stack. Each skill lives in .claude/skills/ and has a header with metadata:\n--- name: java-architect description: Use when building enterprise Java apps with Spring Boot, microservices, or reactive programming. metadata: version: \"1.0.0\" domain: language triggers: Spring Boot, Java, JPA, Hibernate, WebFlux role: architect scope: implementation --- # Java Architect Enterprise Java specialist focused on Spring Boot and cloud-native development. ## Core Workflow 1. **Architecture analysis** — Review project structure and dependencies 2. **Domain design** — Create models following DDD and Clean Architecture 3. **Implementation** — Build services with Spring Boot best practices 4. **Data layer** — Optimize JPA queries, implement repositories 5. **Security \u0026 config** — Apply Spring Security, externalize configuration 6. **Quality assurance** — Run `mvn verify`, ensure 85%+ coverage You can check loaded skills with the /skills command in Claude Code.\nSubagents — Specialized AI Workers Subagents are specialized agents that handle specific concerns:\nAgent Role spring-boot-engineer Core application code java-architect Architecture decisions code-reviewer Code quality review security-engineer Security best practices docker-expert Containerization kubernetes-specialist K8s deployment manifests Note: Subagents can significantly increase token usage. If you want to keep costs low, disable subagents and use the spring-boot-engineer agent as your main agent.\nPractical Example After setting up the template, here’s a sample prompt:\nCreate an application that exposes a REST API and connects to a PostgreSQL database. The application should have a Person entity with an id and typical fields. All REST endpoints should be protected with JWT and OAuth2. Use Skaffold for Kubernetes deployment. Claude Code will:\nEnter plan mode — create a detailed implementation strategy Generate code in phases — typically 8-10 phases Write and run tests — using Testcontainers for integration tests Create infrastructure — Dockerfile, Docker Compose, K8s manifests, CI pipeline Review for quality — check for overengineering and best practices A prompt like this can generate ~3700 lines of well-structured code.\nThe Recommended Workflow Following Anthropic’s recommendations, the workflow has four phases:\nExplore — Claude analyzes the codebase and understands the context Plan — Creates a detailed implementation plan with token estimates Implement — Generates code phase by phase Commit — Verifies everything works and commits Best Practices Always use plan mode — It prevents Claude from rushing into bad implementations Keep skills focused — One skill = one capability Add verification steps — Tests, linting, and coverage checks Update lessons learned — Maintain tasks/lessons.md for continuous improvement Start simple — Use the template as a starting point and iterate based on your needs Conclusion A well-crafted Claude Code template transforms AI code generation from “hit or miss” to consistently high-quality output. The key is providing clear instructions, domain-specific skills, and quality verification gates.\nThe template is still an evolving practice — experiment with different skill configurations and agent setups to find what works best for your projects.\nWant to try it yourself? Check out Piotr Minkowski’s template as a starting point and customize it for your own stack.\n",
-  "wordCount" : "950",
+  "articleBody": "Introduction AI-powered coding assistants like Claude Code are reshaping how developers build applications. But here’s the thing — simply launching Claude Code and typing a prompt won’t get you production-quality code. The real power lies in providing Claude with a well-structured template that encodes your conventions, preferred tech stack, and quality expectations.\nIn this post, I’ll walk you through a Claude Code template I’ve built for Spring Boot applications. I’ve published it as a ready-to-use starter repository on GitHub: claude-ai-skill. You can clone it, customize the CLAUDE.md file, and start generating apps immediately.\nWe’ll cover:\nWhy templates matter for AI-assisted coding The structure of the template repository How to configure CLAUDE.md, skills, and subagents A practical workflow for generating a Spring Boot app Motivation The Claude Code documentation lists several best practices for getting the best results. You can just launch Claude and enter a prompt — but if you want the generated code to meet your expectations, following these practices is essential.\nMost developers, when they start using Claude Code seriously, end up looking for a ready-made repository template that matches their tech stack. Building one from scratch takes considerable time and trial-and-error. Communities around specific technologies should maintain, improve, and share these templates — it benefits everyone.\nThat’s why I created and maintain this template. You can use it as:\nA ready-to-use starter that requires only minimal changes to CLAUDE.md Inspiration to build your own template tailored to your team’s conventions Source Code The complete template is available on GitHub: jitendrar292/claude-ai-skill. Clone the repo and follow along.\nHere’s the repository structure:\n. ├── .claude │ ├── agents │ │ ├── code-reviewer.md │ │ ├── devops-engineer.md │ │ ├── docker-expert.md │ │ ├── java-architect.md │ │ ├── kubernetes-specialist.md │ │ ├── security-engineer.md │ │ ├── spring-boot-engineer.md │ │ └── test-automator.md │ ├── settings.local.json │ └── skills │ ├── README.md │ ├── api-contract-review │ │ └── SKILL.md │ ├── clean-code │ │ └── SKILL.md │ ├── design-patterns │ │ └── SKILL.md │ ├── java-architect │ │ ├── SKILL.md │ │ └── references │ │ ├── jpa-optimization.md │ │ ├── reactive-webflux.md │ │ ├── spring-boot-setup.md │ │ ├── spring-security.md │ │ └── testing-patterns.md │ ├── java-code-review │ │ └── SKILL.md │ ├── jpa-patterns │ │ └── SKILL.md │ ├── logging-patterns │ │ └── SKILL.md │ ├── spring-boot-engineer │ │ ├── SKILL.md │ │ └── references │ │ ├── cloud.md │ │ ├── data.md │ │ ├── security.md │ │ ├── testing.md │ │ └── web.md │ └── spring-boot-patterns │ └── SKILL.md ├── CLAUDE.md ├── README.md └── pom.xml The template has three main components: the CLAUDE.md file (the brain), skills (domain knowledge), and agents (specialized workers). Let’s dive into each.\nThe CLAUDE.md File CLAUDE.md is the heart of the template. It acts as a built-in briefing that Claude loads at the beginning of every interaction. Think of it as a config file for AI behavior — it defines coding conventions, workflows, and quality gates that Claude consistently follows.\nMy CLAUDE.md is organized into six key sections:\n### 1. Plan Mode Default - Enter plan mode for ANY not-trivial task (3+ steps or architectural decisions) - Use plan mode for verification steps, not just building - Write detailed specs upfront to reduce ambiguity ### 2. Self-Improvement Loop - After ANY correction from the user: update `tasks/lessons.md` with the pattern - Write rules for yourself that prevent the same mistake - Ruthlessly iterate on these lessons until the mistake rate drops - Review lessons at session start for a project ### 3. Verification Before Done - Never mark a task complete without proving it works - Diff behavior between main and your changes when relevant - Ask yourself: \"Would a staff engineer approve this?\" - Run tests, check logs, demonstrate correctness ### 4. Demand Elegance (Balanced) - For non-trivial changes: pause and ask \"is there a more elegant way?\" - If a fix feels hacky: \"Knowing everything I know now, implement the elegant solution\" - Skip this for simple, obvious fixes. Don't overengineer - Challenge your own work before presenting it ### 5. Skills Usage - Use skills for any task that requires a capability - Load skills from `.claude/skills/` - Invoke skills with natural language - Each skill is one independent capability ### 6. Subagents Usage - Use subagents liberally to keep the main context window clean - Load subagents from `.claude/agents/` - For complex problems, throw more compute at it via subagents - One task per subagent for focused execution on a given tech stack Enabling plan mode (Section 1) is critical — it lets you review the implementation strategy before Claude starts generating code. The self-improvement loop (Section 2) ensures Claude learns from corrections during a session. And verification (Section 3) prevents the classic problem of code that looks right but fails in practice.\nProject-Specific Instructions Below the workflow rules, I define my project conventions. These are the non-negotiable expectations for any generated code:\n## Core Principles - **Simplicity First**: Make every change as simple as possible. Impact minimal code - **No Laziness**: Find root causes. No temporary fixes. Senior developer standards ## Project General Instructions - Always use the latest versions of dependencies - Always write Java code as the Spring Boot application - Always use Maven for dependency management - Always create test cases for the generated code both positive and negative - Always generate the CircleCI pipeline in the .circleci directory to verify the code - Minimize the amount of code generated - The Maven artifact name must be the same as the parent directory name - Use semantic versioning for the Maven project - Do not use the Lombok library - Generate the Docker Compose file to run all components used by the application - Update README.md each time you generate a new version Even if some of these are covered in skills, repeating key expectations in CLAUDE.md reinforces them. Feel free to swap CircleCI for GitHub Actions or Jenkins — the template is yours to customize.\nSkills — Extending Claude’s Knowledge Skills are the mechanism to extend Claude’s knowledge with domain-specific expertise. Each skill lives in .claude/skills/ and focuses on one independent capability. You can verify loaded skills by running the /skills command inside Claude Code.\nThe template includes nine skills:\nSkill Purpose api-contract-review API design and contract validation clean-code Code quality and readability standards design-patterns GoF and enterprise patterns java-architect Enterprise Java architecture with Spring Boot java-code-review Java-specific code review checklist jpa-patterns JPA/Hibernate optimization patterns logging-patterns Structured logging best practices spring-boot-engineer Full-stack Spring Boot development spring-boot-patterns Spring-specific design patterns Each skill has a header section with metadata that helps Claude understand when to invoke it:\n--- name: java-architect description: Use when building, configuring, or debugging enterprise Java applications with Spring Boot, microservices, or reactive programming. Invoke to implement WebFlux endpoints, optimize JPA queries and database performance, configure Spring Security with OAuth2/JWT, or resolve authentication issues and async processing challenges. metadata: version: \"1.0.0\" domain: language triggers: Spring Boot, Java, microservices, Spring Cloud, JPA, Hibernate, WebFlux role: architect scope: implementation output-format: code --- # Java Architect Enterprise Java specialist focused on Spring Boot, microservices architecture, and cloud-native development using Java 21 LTS. ## Core Workflow 1. **Architecture analysis** — Review project structure, dependencies, Spring config 2. **Domain design** — Create models following DDD and Clean Architecture 3. **Implementation** — Build services with Spring Boot best practices 4. **Data layer** — Optimize JPA queries, implement repositories; run `mvn verify` to confirm query correctness 5. **Security \u0026 config** — Apply Spring Security, externalize configuration 6. **Quality assurance** — Run `mvn verify`, ensure 85%+ coverage via JaCoCo The triggers field in metadata tells Claude Code when to automatically activate a skill based on the technologies mentioned in your prompt. The references/ subfolder under some skills (like java-architect and spring-boot-engineer) contains additional reference documents for deeper context.\nSubagents — Specialized AI Workers Subagents are specialized agents that focus on specific concerns. They keep the main context window clean by offloading focused tasks to dedicated agents. The template ships with eight agents:\nAgent Role spring-boot-engineer Core Spring Boot application code java-architect Architecture and design decisions code-reviewer Code quality and best practice review test-automator Test generation and coverage security-engineer Security hardening and vulnerability checks docker-expert Containerization and Docker configuration devops-engineer CI/CD pipelines and DevOps setup kubernetes-specialist K8s deployment manifests and Helm charts You can verify the available agents by running the /agents command in Claude Code.\nToken usage note: Subagents can significantly increase token consumption. If you want to keep costs low, rewrite Section 6 of CLAUDE.md to disable subagents and use only the spring-boot-engineer agent as your main agent:\n### 6. Subagents usage - Load subagents from `.claude/agents/` - Don't use subagents - Use only the single custom agent `spring-boot-engineer` as the main agent Practical Example After cloning the repository, navigate to its root directory and run Claude Code. Here’s a sample prompt to test the template:\nCreate the application that exposes a REST API and connects to a PostgreSQL database in the current directory. The application should have a Person entity with an id and typical fields for each person. All REST endpoints should be protected with JWT and OAuth2. The codebase should use Skaffold to deploy on Kubernetes. After entering this prompt, Claude Code will:\nEnter plan mode — analyze requirements and create a detailed implementation strategy with token estimates Divide work into phases — typically 8-10 phases covering models, repositories, services, controllers, security, tests, and infrastructure Generate code phase by phase — Spring Boot application code, JPA entities, REST controllers with security Write and run tests — unit tests and integration tests using Testcontainers Create infrastructure — Dockerfile, Docker Compose, Kubernetes manifests, Skaffold config, and CircleCI pipeline Review for quality — check for overengineering and adherence to best practices A prompt like this typically generates around 3,700 lines of well-structured, tested code.\nThe Recommended Workflow Anthropic recommends a four-phase workflow for Claude Code:\nExplore — Claude analyzes the codebase and understands the existing context Plan — Creates a detailed implementation plan, estimates token usage, and waits for your approval Implement — Generates code phase by phase, running tests along the way Commit — Verifies everything works and commits the changes This workflow ensures you stay in control. The plan mode gives you a chance to course-correct before any code is generated, and the verification steps ensure the output actually works.\nBest Practices Here are the key takeaways from building and using this template:\nAlways enable plan mode — It prevents Claude from rushing into bad implementations and gives you a review checkpoint Keep skills focused — One skill = one capability. Don’t create monolithic skills that try to cover everything Add verification gates — Tests, linting, and coverage checks should be part of the workflow, not an afterthought Maintain lessons learned — The tasks/lessons.md file captures mistakes and patterns, making Claude better over time within a session Start with the template, then customize — Clone the repo, adjust CLAUDE.md for your conventions, and iterate Be strategic with subagents — They improve quality but cost more tokens. Start without them and add selectively Conclusion A well-crafted Claude Code template transforms AI code generation from “hit or miss” to consistently high-quality output. The key ingredients are clear instructions in CLAUDE.md, domain-specific skills, and built-in quality verification gates.\nThis template is still evolving — I’m continuously comparing different configurations and optimizing for the balance between generation time, token usage, and code quality. Feel free to clone the repository, try it out, and adapt it to your needs. If you have feedback or ideas for improvement, open an issue or pull request on GitHub.\n",
+  "wordCount" : "1941",
   "inLanguage": "en",
   "datePublished": "2026-04-16T00:00:00Z",
   "dateModified": "2026-04-16T00:00:00Z",
@@ -209,7 +209,7 @@
     <h1 class="post-title entry-hint-parent">
       Claude Code Template for Spring Boot — A Practical Guide
     </h1>
-    <div class="post-meta"><span title='2026-04-16 00:00:00 +0000 UTC'>April 16, 2026</span>&nbsp;·&nbsp;<span>5 min</span>&nbsp;·&nbsp;<span>Jitendra Rawat</span>
+    <div class="post-meta"><span title='2026-04-16 00:00:00 +0000 UTC'>April 16, 2026</span>&nbsp;·&nbsp;<span>10 min</span>&nbsp;·&nbsp;<span>Jitendra Rawat</span>
 
 </div>
   </header> <details class="toc" >
@@ -221,9 +221,9 @@
             <li>
                 <a href="#introduction" aria-label="Introduction">Introduction</a></li>
             <li>
-                <a href="#why-use-a-template" aria-label="Why Use a Template?">Why Use a Template?</a></li>
+                <a href="#motivation" aria-label="Motivation">Motivation</a></li>
             <li>
-                <a href="#repository-structure" aria-label="Repository Structure">Repository Structure</a></li>
+                <a href="#source-code" aria-label="Source Code">Source Code</a></li>
             <li>
                 <a href="#the-claudemd-file" aria-label="The CLAUDE.md File">The CLAUDE.md File</a><ul>
                     
@@ -248,107 +248,213 @@
 </details>
 
   <div class="post-content md-content"><h2 id="introduction">Introduction<a hidden class="anchor" aria-hidden="true" href="#introduction">#</a></h2>
-<p>AI-powered coding tools like <strong>Claude Code</strong> are changing how we build applications. But just launching Claude Code and typing a prompt isn&rsquo;t enough to get production-quality code. You need a well-structured <strong>template</strong> that guides the AI with your conventions, tech stack, and quality expectations.</p>
-<p>In this post, I&rsquo;ll walk through how to set up a Claude Code template for <strong>Spring Boot</strong> applications — covering the <code>CLAUDE.md</code> file, skills, subagents, and a practical workflow.</p>
-<h2 id="why-use-a-template">Why Use a Template?<a hidden class="anchor" aria-hidden="true" href="#why-use-a-template">#</a></h2>
-<p>Without a template, Claude Code generates code based on generic assumptions. With a template, you get:</p>
+<p>AI-powered coding assistants like <strong>Claude Code</strong> are reshaping how developers build applications. But here&rsquo;s the thing — simply launching Claude Code and typing a prompt won&rsquo;t get you production-quality code. The real power lies in providing Claude with a well-structured <strong>template</strong> that encodes your conventions, preferred tech stack, and quality expectations.</p>
+<p>In this post, I&rsquo;ll walk you through a Claude Code template I&rsquo;ve built for <strong>Spring Boot</strong> applications. I&rsquo;ve published it as a ready-to-use starter repository on GitHub: <a href="https://github.com/jitendrar292/claude-ai-skill">claude-ai-skill</a>. You can clone it, customize the <code>CLAUDE.md</code> file, and start generating apps immediately.</p>
+<p>We&rsquo;ll cover:</p>
 <ul>
-<li><strong>Consistent coding style</strong> across all generated code</li>
-<li><strong>Your preferred tech stack</strong> (Maven, JPA, Spring Security, etc.)</li>
-<li><strong>Automated testing</strong> — Claude writes and runs tests</li>
-<li><strong>Infrastructure-as-code</strong> — Dockerfiles, Kubernetes manifests, CI/CD pipelines</li>
-<li><strong>Quality gates</strong> — code review, overengineering checks</li>
+<li>Why templates matter for AI-assisted coding</li>
+<li>The structure of the template repository</li>
+<li>How to configure <code>CLAUDE.md</code>, skills, and subagents</li>
+<li>A practical workflow for generating a Spring Boot app</li>
 </ul>
-<h2 id="repository-structure">Repository Structure<a hidden class="anchor" aria-hidden="true" href="#repository-structure">#</a></h2>
-<p>A well-organized template looks like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>.
+<h2 id="motivation">Motivation<a hidden class="anchor" aria-hidden="true" href="#motivation">#</a></h2>
+<p>The Claude Code <a href="https://code.claude.com/docs/en/best-practices">documentation</a> lists several best practices for getting the best results. You <em>can</em> just launch Claude and enter a prompt — but if you want the generated code to meet your expectations, following these practices is essential.</p>
+<p>Most developers, when they start using Claude Code seriously, end up looking for a ready-made repository template that matches their tech stack. Building one from scratch takes considerable time and trial-and-error. Communities around specific technologies should maintain, improve, and share these templates — it benefits everyone.</p>
+<p>That&rsquo;s why I created and maintain this template. You can use it as:</p>
+<ul>
+<li>A <strong>ready-to-use starter</strong> that requires only minimal changes to <code>CLAUDE.md</code></li>
+<li><strong>Inspiration</strong> to build your own template tailored to your team&rsquo;s conventions</li>
+</ul>
+<h2 id="source-code">Source Code<a hidden class="anchor" aria-hidden="true" href="#source-code">#</a></h2>
+<p>The complete template is available on GitHub: <a href="https://github.com/jitendrar292/claude-ai-skill">jitendrar292/claude-ai-skill</a>. Clone the repo and follow along.</p>
+<p>Here&rsquo;s the repository structure:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>.
 </span></span><span style="display:flex;"><span>├── .claude
 </span></span><span style="display:flex;"><span>│   ├── agents
 </span></span><span style="display:flex;"><span>│   │   ├── code-reviewer.md
-</span></span><span style="display:flex;"><span>│   │   ├── java-architect.md
-</span></span><span style="display:flex;"><span>│   │   ├── spring-boot-engineer.md
-</span></span><span style="display:flex;"><span>│   │   ├── security-engineer.md
+</span></span><span style="display:flex;"><span>│   │   ├── devops-engineer.md
 </span></span><span style="display:flex;"><span>│   │   ├── docker-expert.md
-</span></span><span style="display:flex;"><span>│   │   └── kubernetes-specialist.md
+</span></span><span style="display:flex;"><span>│   │   ├── java-architect.md
+</span></span><span style="display:flex;"><span>│   │   ├── kubernetes-specialist.md
+</span></span><span style="display:flex;"><span>│   │   ├── security-engineer.md
+</span></span><span style="display:flex;"><span>│   │   ├── spring-boot-engineer.md
+</span></span><span style="display:flex;"><span>│   │   └── test-automator.md
+</span></span><span style="display:flex;"><span>│   ├── settings.local.json
 </span></span><span style="display:flex;"><span>│   └── skills
-</span></span><span style="display:flex;"><span>│       ├── clean-code/SKILL.md
-</span></span><span style="display:flex;"><span>│       ├── design-patterns/SKILL.md
-</span></span><span style="display:flex;"><span>│       ├── java-architect/SKILL.md
-</span></span><span style="display:flex;"><span>│       ├── jpa-patterns/SKILL.md
-</span></span><span style="display:flex;"><span>│       ├── spring-boot-engineer/SKILL.md
-</span></span><span style="display:flex;"><span>│       └── spring-boot-patterns/SKILL.md
+</span></span><span style="display:flex;"><span>│       ├── README.md
+</span></span><span style="display:flex;"><span>│       ├── api-contract-review
+</span></span><span style="display:flex;"><span>│       │   └── SKILL.md
+</span></span><span style="display:flex;"><span>│       ├── clean-code
+</span></span><span style="display:flex;"><span>│       │   └── SKILL.md
+</span></span><span style="display:flex;"><span>│       ├── design-patterns
+</span></span><span style="display:flex;"><span>│       │   └── SKILL.md
+</span></span><span style="display:flex;"><span>│       ├── java-architect
+</span></span><span style="display:flex;"><span>│       │   ├── SKILL.md
+</span></span><span style="display:flex;"><span>│       │   └── references
+</span></span><span style="display:flex;"><span>│       │       ├── jpa-optimization.md
+</span></span><span style="display:flex;"><span>│       │       ├── reactive-webflux.md
+</span></span><span style="display:flex;"><span>│       │       ├── spring-boot-setup.md
+</span></span><span style="display:flex;"><span>│       │       ├── spring-security.md
+</span></span><span style="display:flex;"><span>│       │       └── testing-patterns.md
+</span></span><span style="display:flex;"><span>│       ├── java-code-review
+</span></span><span style="display:flex;"><span>│       │   └── SKILL.md
+</span></span><span style="display:flex;"><span>│       ├── jpa-patterns
+</span></span><span style="display:flex;"><span>│       │   └── SKILL.md
+</span></span><span style="display:flex;"><span>│       ├── logging-patterns
+</span></span><span style="display:flex;"><span>│       │   └── SKILL.md
+</span></span><span style="display:flex;"><span>│       ├── spring-boot-engineer
+</span></span><span style="display:flex;"><span>│       │   ├── SKILL.md
+</span></span><span style="display:flex;"><span>│       │   └── references
+</span></span><span style="display:flex;"><span>│       │       ├── cloud.md
+</span></span><span style="display:flex;"><span>│       │       ├── data.md
+</span></span><span style="display:flex;"><span>│       │       ├── security.md
+</span></span><span style="display:flex;"><span>│       │       ├── testing.md
+</span></span><span style="display:flex;"><span>│       │       └── web.md
+</span></span><span style="display:flex;"><span>│       └── spring-boot-patterns
+</span></span><span style="display:flex;"><span>│           └── SKILL.md
 </span></span><span style="display:flex;"><span>├── CLAUDE.md
-</span></span><span style="display:flex;"><span>├── pom.xml
-</span></span><span style="display:flex;"><span>└── README.md
-</span></span></code></pre></div><h2 id="the-claudemd-file">The CLAUDE.md File<a hidden class="anchor" aria-hidden="true" href="#the-claudemd-file">#</a></h2>
-<p>This is the heart of the template. It acts as a <strong>built-in briefing</strong> that Claude loads at the start of every interaction. Here&rsquo;s the structure I recommend:</p>
+</span></span><span style="display:flex;"><span>├── README.md
+</span></span><span style="display:flex;"><span>└── pom.xml
+</span></span></code></pre></div><p>The template has three main components: the <strong>CLAUDE.md</strong> file (the brain), <strong>skills</strong> (domain knowledge), and <strong>agents</strong> (specialized workers). Let&rsquo;s dive into each.</p>
+<h2 id="the-claudemd-file">The CLAUDE.md File<a hidden class="anchor" aria-hidden="true" href="#the-claudemd-file">#</a></h2>
+<p><code>CLAUDE.md</code> is the heart of the template. It acts as a <strong>built-in briefing</strong> that Claude loads at the beginning of every interaction. Think of it as a config file for AI behavior — it defines coding conventions, workflows, and quality gates that Claude consistently follows.</p>
+<p>My <code>CLAUDE.md</code> is organized into six key sections:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span><span style="color:#75715e">### 1. Plan Mode Default
-</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Enter plan mode for ANY non-trivial task (3+ steps)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Use plan mode for verification, not just building
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Enter plan mode for ANY not-trivial task (3+ steps or architectural decisions)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Use plan mode for verification steps, not just building
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Write detailed specs upfront to reduce ambiguity
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">### 2. Self-Improvement Loop
-</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> After ANY correction: update <span style="color:#e6db74">`tasks/lessons.md`</span> with the pattern
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Write rules to prevent the same mistake
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Review lessons at session start
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> After ANY correction from the user: update <span style="color:#e6db74">`tasks/lessons.md`</span> with the pattern
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Write rules for yourself that prevent the same mistake
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Ruthlessly iterate on these lessons until the mistake rate drops
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Review lessons at session start for a project
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">### 3. Verification Before Done
 </span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Never mark a task complete without proving it works
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Diff behavior between main and your changes when relevant
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Ask yourself: &#34;Would a staff engineer approve this?&#34;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Run tests, check logs, demonstrate correctness
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Ask: &#34;Would a staff engineer approve this?&#34;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">### 4. Demand Elegance
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### 4. Demand Elegance (Balanced)
 </span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> For non-trivial changes: pause and ask &#34;is there a more elegant way?&#34;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> If a fix feels hacky: implement the elegant solution
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Don&#39;t overengineer simple fixes
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> If a fix feels hacky: &#34;Knowing everything I know now, implement the elegant solution&#34;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Skip this for simple, obvious fixes. Don&#39;t overengineer
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Challenge your own work before presenting it
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">### 5. Skills Usage
-</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Load skills from <span style="color:#e6db74">`.claude/skills/`</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Use skills for any task that requires a capability
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Load skills from <span style="color:#e6db74">`.claude/skills/`</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Invoke skills with natural language
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Each skill is one independent capability
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">### 6. Subagents Usage
-</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Load subagents from <span style="color:#e6db74">`.claude/agents/`</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> One task per subagent for focused execution
-</span></span></code></pre></div><h3 id="project-specific-instructions">Project-Specific Instructions<a hidden class="anchor" aria-hidden="true" href="#project-specific-instructions">#</a></h3>
-<p>Add your own conventions:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span><span style="color:#75715e">## Project General Instructions
-</span></span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Always use the latest versions of dependencies
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Use subagents liberally to keep the main context window clean
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Load subagents from <span style="color:#e6db74">`.claude/agents/`</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> For complex problems, throw more compute at it via subagents
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> One task per subagent for focused execution on a given tech stack
+</span></span></code></pre></div><p>Enabling <strong>plan mode</strong> (Section 1) is critical — it lets you review the implementation strategy before Claude starts generating code. The <strong>self-improvement loop</strong> (Section 2) ensures Claude learns from corrections during a session. And <strong>verification</strong> (Section 3) prevents the classic problem of code that looks right but fails in practice.</p>
+<h3 id="project-specific-instructions">Project-Specific Instructions<a hidden class="anchor" aria-hidden="true" href="#project-specific-instructions">#</a></h3>
+<p>Below the workflow rules, I define my project conventions. These are the non-negotiable expectations for any generated code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span><span style="color:#75715e">## Core Principles
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> **Simplicity First**: Make every change as simple as possible. Impact minimal code
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> **No Laziness**: Find root causes. No temporary fixes. Senior developer standards
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## Project General Instructions
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Always use the latest versions of dependencies
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Always write Java code as the Spring Boot application
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Always use Maven for dependency management
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Always create test cases (positive and negative)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Generate the CI pipeline to verify the code
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Minimize the amount of generated code
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Always create test cases for the generated code both positive and negative
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Always generate the CircleCI pipeline in the .circleci directory to verify the code
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Minimize the amount of code generated
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> The Maven artifact name must be the same as the parent directory name
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Use semantic versioning for the Maven project
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Do not use the Lombok library
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Generate Docker Compose for all components
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Update README.md with each new version
-</span></span></code></pre></div><h2 id="skills--extending-claudes-knowledge">Skills — Extending Claude&rsquo;s Knowledge<a hidden class="anchor" aria-hidden="true" href="#skills--extending-claudes-knowledge">#</a></h2>
-<p>Skills extend Claude&rsquo;s knowledge about your specific tech stack. Each skill lives in <code>.claude/skills/</code> and has a header with metadata:</p>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Generate the Docker Compose file to run all components used by the application
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Update README.md each time you generate a new version
+</span></span></code></pre></div><p>Even if some of these are covered in skills, repeating key expectations in <code>CLAUDE.md</code> reinforces them. Feel free to swap CircleCI for GitHub Actions or Jenkins — the template is yours to customize.</p>
+<h2 id="skills--extending-claudes-knowledge">Skills — Extending Claude&rsquo;s Knowledge<a hidden class="anchor" aria-hidden="true" href="#skills--extending-claudes-knowledge">#</a></h2>
+<p>Skills are the mechanism to extend Claude&rsquo;s knowledge with domain-specific expertise. Each skill lives in <code>.claude/skills/</code> and focuses on one independent capability. You can verify loaded skills by running the <code>/skills</code> command inside Claude Code.</p>
+<p>The template includes nine skills:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Skill</th>
+          <th>Purpose</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>api-contract-review</code></td>
+          <td>API design and contract validation</td>
+      </tr>
+      <tr>
+          <td><code>clean-code</code></td>
+          <td>Code quality and readability standards</td>
+      </tr>
+      <tr>
+          <td><code>design-patterns</code></td>
+          <td>GoF and enterprise patterns</td>
+      </tr>
+      <tr>
+          <td><code>java-architect</code></td>
+          <td>Enterprise Java architecture with Spring Boot</td>
+      </tr>
+      <tr>
+          <td><code>java-code-review</code></td>
+          <td>Java-specific code review checklist</td>
+      </tr>
+      <tr>
+          <td><code>jpa-patterns</code></td>
+          <td>JPA/Hibernate optimization patterns</td>
+      </tr>
+      <tr>
+          <td><code>logging-patterns</code></td>
+          <td>Structured logging best practices</td>
+      </tr>
+      <tr>
+          <td><code>spring-boot-engineer</code></td>
+          <td>Full-stack Spring Boot development</td>
+      </tr>
+      <tr>
+          <td><code>spring-boot-patterns</code></td>
+          <td>Spring-specific design patterns</td>
+      </tr>
+  </tbody>
+</table>
+<p>Each skill has a header section with metadata that helps Claude understand when to invoke it:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>---
 </span></span><span style="display:flex;"><span>name: java-architect
-</span></span><span style="display:flex;"><span>description: Use when building enterprise Java apps with Spring Boot,
-</span></span><span style="display:flex;"><span>  microservices, or reactive programming.
+</span></span><span style="display:flex;"><span>description: Use when building, configuring, or debugging enterprise Java
+</span></span><span style="display:flex;"><span>  applications with Spring Boot, microservices, or reactive programming.
+</span></span><span style="display:flex;"><span>  Invoke to implement WebFlux endpoints, optimize JPA queries and database
+</span></span><span style="display:flex;"><span>  performance, configure Spring Security with OAuth2/JWT, or resolve
+</span></span><span style="display:flex;"><span>  authentication issues and async processing challenges.
 </span></span><span style="display:flex;"><span>metadata:
 </span></span><span style="display:flex;"><span>  version: &#34;1.0.0&#34;
 </span></span><span style="display:flex;"><span>  domain: language
-</span></span><span style="display:flex;"><span>  triggers: Spring Boot, Java, JPA, Hibernate, WebFlux
+</span></span><span style="display:flex;"><span>  triggers: Spring Boot, Java, microservices, Spring Cloud, JPA, Hibernate, WebFlux
 </span></span><span style="display:flex;"><span>  role: architect
 </span></span><span style="display:flex;"><span>  scope: implementation
+</span></span><span style="display:flex;"><span>  output-format: code
 </span></span><span style="display:flex;"><span>---
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span># Java Architect
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>Enterprise Java specialist focused on Spring Boot and cloud-native development.
+</span></span><span style="display:flex;"><span>Enterprise Java specialist focused on Spring Boot, microservices architecture,
+</span></span><span style="display:flex;"><span>and cloud-native development using Java 21 LTS.
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">## Core Workflow
-</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">1.</span> <span style="font-weight:bold">**Architecture analysis**</span> — Review project structure and dependencies
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">1.</span> <span style="font-weight:bold">**Architecture analysis**</span> — Review project structure, dependencies, Spring config
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">2.</span> <span style="font-weight:bold">**Domain design**</span> — Create models following DDD and Clean Architecture
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">3.</span> <span style="font-weight:bold">**Implementation**</span> — Build services with Spring Boot best practices
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">4.</span> <span style="font-weight:bold">**Data layer**</span> — Optimize JPA queries, implement repositories
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">4.</span> <span style="font-weight:bold">**Data layer**</span> — Optimize JPA queries, implement repositories;
+</span></span><span style="display:flex;"><span>   run <span style="color:#e6db74">`mvn verify`</span> to confirm query correctness
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">5.</span> <span style="font-weight:bold">**Security &amp; config**</span> — Apply Spring Security, externalize configuration
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">6.</span> <span style="font-weight:bold">**Quality assurance**</span> — Run <span style="color:#e6db74">`mvn verify`</span>, ensure 85%+ coverage
-</span></span></code></pre></div><p>You can check loaded skills with the <code>/skills</code> command in Claude Code.</p>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">6.</span> <span style="font-weight:bold">**Quality assurance**</span> — Run <span style="color:#e6db74">`mvn verify`</span>, ensure 85%+ coverage via JaCoCo
+</span></span></code></pre></div><p>The <code>triggers</code> field in metadata tells Claude Code when to automatically activate a skill based on the technologies mentioned in your prompt. The <code>references/</code> subfolder under some skills (like <code>java-architect</code> and <code>spring-boot-engineer</code>) contains additional reference documents for deeper context.</p>
 <h2 id="subagents--specialized-ai-workers">Subagents — Specialized AI Workers<a hidden class="anchor" aria-hidden="true" href="#subagents--specialized-ai-workers">#</a></h2>
-<p>Subagents are specialized agents that handle specific concerns:</p>
+<p>Subagents are specialized agents that focus on specific concerns. They keep the main context window clean by offloading focused tasks to dedicated agents. The template ships with eight agents:</p>
 <table>
   <thead>
       <tr>
@@ -359,69 +465,86 @@
   <tbody>
       <tr>
           <td><code>spring-boot-engineer</code></td>
-          <td>Core application code</td>
+          <td>Core Spring Boot application code</td>
       </tr>
       <tr>
           <td><code>java-architect</code></td>
-          <td>Architecture decisions</td>
+          <td>Architecture and design decisions</td>
       </tr>
       <tr>
           <td><code>code-reviewer</code></td>
-          <td>Code quality review</td>
+          <td>Code quality and best practice review</td>
+      </tr>
+      <tr>
+          <td><code>test-automator</code></td>
+          <td>Test generation and coverage</td>
       </tr>
       <tr>
           <td><code>security-engineer</code></td>
-          <td>Security best practices</td>
+          <td>Security hardening and vulnerability checks</td>
       </tr>
       <tr>
           <td><code>docker-expert</code></td>
-          <td>Containerization</td>
+          <td>Containerization and Docker configuration</td>
+      </tr>
+      <tr>
+          <td><code>devops-engineer</code></td>
+          <td>CI/CD pipelines and DevOps setup</td>
       </tr>
       <tr>
           <td><code>kubernetes-specialist</code></td>
-          <td>K8s deployment manifests</td>
+          <td>K8s deployment manifests and Helm charts</td>
       </tr>
   </tbody>
 </table>
+<p>You can verify the available agents by running the <code>/agents</code> command in Claude Code.</p>
 <blockquote>
-<p><strong>Note:</strong> Subagents can significantly increase token usage. If you want to keep costs low, disable subagents and use the <code>spring-boot-engineer</code> agent as your main agent.</p>
+<p><strong>Token usage note:</strong> Subagents can significantly increase token consumption. If you want to keep costs low, rewrite Section 6 of <code>CLAUDE.md</code> to disable subagents and use only the <code>spring-boot-engineer</code> agent as your main agent:</p>
 </blockquote>
-<h2 id="practical-example">Practical Example<a hidden class="anchor" aria-hidden="true" href="#practical-example">#</a></h2>
-<p>After setting up the template, here&rsquo;s a sample prompt:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Create an application that exposes a REST API and connects to a
-</span></span><span style="display:flex;"><span>PostgreSQL database. The application should have a Person entity
-</span></span><span style="display:flex;"><span>with an id and typical fields. All REST endpoints should be
-</span></span><span style="display:flex;"><span>protected with JWT and OAuth2. Use Skaffold for Kubernetes deployment.
-</span></span></code></pre></div><p>Claude Code will:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span><span style="color:#75715e">### 6. Subagents usage
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Load subagents from <span style="color:#e6db74">`.claude/agents/`</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Don&#39;t use subagents
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Use only the single custom agent <span style="color:#e6db74">`spring-boot-engineer`</span> as the main agent
+</span></span></code></pre></div><h2 id="practical-example">Practical Example<a hidden class="anchor" aria-hidden="true" href="#practical-example">#</a></h2>
+<p>After cloning the repository, navigate to its root directory and run Claude Code. Here&rsquo;s a sample prompt to test the template:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Create the application that exposes a REST API and connects to a PostgreSQL
+</span></span><span style="display:flex;"><span>database in the current directory. The application should have a Person entity
+</span></span><span style="display:flex;"><span>with an id and typical fields for each person. All REST endpoints should be
+</span></span><span style="display:flex;"><span>protected with JWT and OAuth2. The codebase should use Skaffold to deploy
+</span></span><span style="display:flex;"><span>on Kubernetes.
+</span></span></code></pre></div><p>After entering this prompt, Claude Code will:</p>
 <ol>
-<li><strong>Enter plan mode</strong> — create a detailed implementation strategy</li>
-<li><strong>Generate code in phases</strong> — typically 8-10 phases</li>
-<li><strong>Write and run tests</strong> — using Testcontainers for integration tests</li>
-<li><strong>Create infrastructure</strong> — Dockerfile, Docker Compose, K8s manifests, CI pipeline</li>
-<li><strong>Review for quality</strong> — check for overengineering and best practices</li>
+<li><strong>Enter plan mode</strong> — analyze requirements and create a detailed implementation strategy with token estimates</li>
+<li><strong>Divide work into phases</strong> — typically 8-10 phases covering models, repositories, services, controllers, security, tests, and infrastructure</li>
+<li><strong>Generate code phase by phase</strong> — Spring Boot application code, JPA entities, REST controllers with security</li>
+<li><strong>Write and run tests</strong> — unit tests and integration tests using Testcontainers</li>
+<li><strong>Create infrastructure</strong> — Dockerfile, Docker Compose, Kubernetes manifests, Skaffold config, and CircleCI pipeline</li>
+<li><strong>Review for quality</strong> — check for overengineering and adherence to best practices</li>
 </ol>
-<p>A prompt like this can generate ~3700 lines of well-structured code.</p>
+<p>A prompt like this typically generates around 3,700 lines of well-structured, tested code.</p>
 <h2 id="the-recommended-workflow">The Recommended Workflow<a hidden class="anchor" aria-hidden="true" href="#the-recommended-workflow">#</a></h2>
-<p>Following Anthropic&rsquo;s recommendations, the workflow has four phases:</p>
+<p>Anthropic recommends a four-phase workflow for Claude Code:</p>
 <ol>
-<li><strong>Explore</strong> — Claude analyzes the codebase and understands the context</li>
-<li><strong>Plan</strong> — Creates a detailed implementation plan with token estimates</li>
-<li><strong>Implement</strong> — Generates code phase by phase</li>
-<li><strong>Commit</strong> — Verifies everything works and commits</li>
+<li><strong>Explore</strong> — Claude analyzes the codebase and understands the existing context</li>
+<li><strong>Plan</strong> — Creates a detailed implementation plan, estimates token usage, and waits for your approval</li>
+<li><strong>Implement</strong> — Generates code phase by phase, running tests along the way</li>
+<li><strong>Commit</strong> — Verifies everything works and commits the changes</li>
 </ol>
+<p>This workflow ensures you stay in control. The plan mode gives you a chance to course-correct before any code is generated, and the verification steps ensure the output actually works.</p>
 <h2 id="best-practices">Best Practices<a hidden class="anchor" aria-hidden="true" href="#best-practices">#</a></h2>
+<p>Here are the key takeaways from building and using this template:</p>
 <ol>
-<li><strong>Always use plan mode</strong> — It prevents Claude from rushing into bad implementations</li>
-<li><strong>Keep skills focused</strong> — One skill = one capability</li>
-<li><strong>Add verification steps</strong> — Tests, linting, and coverage checks</li>
-<li><strong>Update lessons learned</strong> — Maintain <code>tasks/lessons.md</code> for continuous improvement</li>
-<li><strong>Start simple</strong> — Use the template as a starting point and iterate based on your needs</li>
+<li><strong>Always enable plan mode</strong> — It prevents Claude from rushing into bad implementations and gives you a review checkpoint</li>
+<li><strong>Keep skills focused</strong> — One skill = one capability. Don&rsquo;t create monolithic skills that try to cover everything</li>
+<li><strong>Add verification gates</strong> — Tests, linting, and coverage checks should be part of the workflow, not an afterthought</li>
+<li><strong>Maintain lessons learned</strong> — The <code>tasks/lessons.md</code> file captures mistakes and patterns, making Claude better over time within a session</li>
+<li><strong>Start with the template, then customize</strong> — Clone the repo, adjust <code>CLAUDE.md</code> for your conventions, and iterate</li>
+<li><strong>Be strategic with subagents</strong> — They improve quality but cost more tokens. Start without them and add selectively</li>
 </ol>
 <h2 id="conclusion">Conclusion<a hidden class="anchor" aria-hidden="true" href="#conclusion">#</a></h2>
-<p>A well-crafted Claude Code template transforms AI code generation from &ldquo;hit or miss&rdquo; to consistently high-quality output. The key is providing clear instructions, domain-specific skills, and quality verification gates.</p>
-<p>The template is still an evolving practice — experiment with different skill configurations and agent setups to find what works best for your projects.</p>
+<p>A well-crafted Claude Code template transforms AI code generation from &ldquo;hit or miss&rdquo; to consistently high-quality output. The key ingredients are clear instructions in <code>CLAUDE.md</code>, domain-specific skills, and built-in quality verification gates.</p>
+<p>This template is still evolving — I&rsquo;m continuously comparing different configurations and optimizing for the balance between generation time, token usage, and code quality. Feel free to clone the <a href="https://github.com/jitendrar292/claude-ai-skill">repository</a>, try it out, and adapt it to your needs. If you have feedback or ideas for improvement, open an issue or pull request on GitHub.</p>
 <hr>
-<p><em>Want to try it yourself? Check out <a href="https://github.com/piomin/claude-ai-spring-boot">Piotr Minkowski&rsquo;s template</a> as a starting point and customize it for your own stack.</em></p>
 
 
   </div>
