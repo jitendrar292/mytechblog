@@ -191,5 +191,3 @@ A well-crafted Claude Code template transforms AI code generation from "hit or m
 The template is still an evolving practice — experiment with different skill configurations and agent setups to find what works best for your projects.
 
 ---
-
-*Want to try it yourself? Check out [Piotr Minkowski's template](https://github.com/piomin/claude-ai-spring-boot) as a starting point and customize it for your own stack.*
