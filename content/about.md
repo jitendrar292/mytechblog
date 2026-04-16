@@ -4,17 +4,25 @@ url: "/about/"
 summary: "About Me"
 ---
 
-## Hi, I'm Jit 👋
+## Hey there, I'm Jitendra Rawat! 👋
 
-I'm a software engineer passionate about **distributed systems**, **event-driven architecture**, and **cloud-native** technologies.
+🚀 **Software Engineer at Adidas** | 🧠 System Design Enthusiast
+
+💻 Building software since 2014. I'm focused on software architecture, modular systems, and maintainability — designing scalable backend systems and exploring AI-powered developer tooling.
 
 ### What I Write About
-- **Apache Kafka** — deep dives, patterns, and production tips
-- **Spring Boot** — microservices, configuration, and best practices
-- **Cloud Native** — Kubernetes, Docker, and CI/CD
-- **System Design** — scalable architecture patterns
+- **Software Architecture** — modular systems, design patterns, and ADRs
+- **AI-powered Development** — RAG systems, AI tooling, and developer productivity
+- **Apache Kafka & Spring Boot** — event-driven architecture and microservices
+- **System Design** — scalable backend architecture
+
+### Current Focus
+- 🤝 Developer productivity using AI
+- 🧠 AI-powered application development
+- 🏗️ Architecting software without over-engineering
 
 ### Connect
-- [GitHub](https://github.com/yourusername)
-- [LinkedIn](https://linkedin.com/in/yourprofile)
-- [Twitter](https://twitter.com/yourhandle)
+- [GitHub](https://github.com/jitendrar292)
+- [LinkedIn](https://www.linkedin.com/in/jitendrar-singh-rawat/)
+
+⭐️ I enjoy building useful systems and sharing what I learn along the way.

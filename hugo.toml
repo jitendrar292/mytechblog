@@ -1,13 +1,13 @@
 baseURL = "https://jitendrar292.github.io/mytechblog/"
 languageCode = "en-us"
-title = "Jit's Tech Blog"
+title = "Jitendra Rawat's Tech Blog"
 theme = "PaperMod"
 paginate = 10
 
 [params]
   env = "production"
-  description = "Deep dives into Kafka, Spring Boot, Microservices & Cloud Native"
-  author = "Jit Rawat"
+  description = "Software Engineer | System Design Enthusiast | AI-powered Developer Tooling"
+  author = "Jitendra Rawat"
   ShowReadingTime = true
   ShowShareButtons = true
   ShowPostNavLinks = true
@@ -19,20 +19,16 @@ paginate = 10
   disableThemeToggle = false
 
   [params.homeInfoParams]
-    Title = "Hey there 👋"
-    Content = "Welcome to my tech blog — I write about **Kafka**, **Spring Boot**, **Microservices**, and **Cloud Native** technologies."
+    Title = "Hey there, I'm Jitendra Rawat! 👋"
+    Content = "🚀 Software Engineer | 🧠 System Design Enthusiast — I write about **Software Architecture**, **AI-powered Development**, **Kafka**, **Spring Boot**, and building **scalable backend systems**."
 
   [[params.socialIcons]]
     name = "github"
-    url = "https://github.com/yourusername"
+    url = "https://github.com/jitendrar292"
 
   [[params.socialIcons]]
     name = "linkedin"
-    url = "https://linkedin.com/in/yourprofile"
-
-  [[params.socialIcons]]
-    name = "twitter"
-    url = "https://twitter.com/yourhandle"
+    url = "https://www.linkedin.com/in/jitendrar-singh-rawat/"
 
 [menu]
   [[menu.main]]
